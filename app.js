@@ -32,6 +32,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const sellerController = require('./controllers/seller');
 
 /**
  * API keys and Passport configuration.
@@ -107,6 +108,12 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+
+/**
+ * Turboestate routes
+ */
+app.get('/seller', sellerController.getSellerDashboard);
+app.get('/listing/:id', sellerController.getListing);
 
 /**
  * Primary app routes.
