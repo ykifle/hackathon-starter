@@ -23,7 +23,8 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+const configName = process.env.config || '.env.example';
+dotenv.load({ path: configName });
 
 /**
  * Controllers (route handlers).
@@ -47,8 +48,7 @@ const app = express();
 /**
  * Connect to MongoDB.
  */
-const MONGODB_URI='mongodb://localhost:8082/test';
-mongoose.connect(MONGODB_URI || process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
 mongoose.connection.on('connected', () => {
   console.log('%s MongoDB connection established!', chalk.green('✓'));
 });
@@ -77,7 +77,7 @@ app.use(session({
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
-    url: MONGODB_URI || process.env.MONGOLAB_URI,
+    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
     autoReconnect: true
   })
 }));

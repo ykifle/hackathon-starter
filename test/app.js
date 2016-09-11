@@ -1,4 +1,5 @@
 const request = require('supertest');
+process.env.config = '.env.test';
 const app = require('../app.js');
 
 describe('GET /', () => {
