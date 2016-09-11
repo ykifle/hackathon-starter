@@ -1,0 +1,64 @@
+extends ../layout
+
+block content
+  .right-back-col
+  .row
+    .col-md-3
+      .sidebar-nav
+        .navbar(role="navigation")
+          .navbar-header
+            button(type="button", class="navbar-toggle", data-toggle="collapse", data-target=".sidebar-navbar-collapse")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            span.visible-xs.navbar-brand Sidebar menu
+          .navbar-collapse.collapse.sidebar-navbar-collapse
+            ul.nav.navbar-nav
+              li(class=(title == 'Listing') ? 'active': undefined)
+                a(href='/listing/' + listingId) Overview
+              li(class=(title == 'Disclosures') ? 'active': undefined)
+                a(href='/listing/' + listingId + '/disclosures') Disclosures
+              li(class=(title == 'Offers') ? 'active': undefined)
+                a(href='/listing/' + listingId + '/offers') Offers
+                  span.badge 2
+    .col-md-8
+      .row
+        .col-md-12
+          h4 Offers
+          h1.big-q Review the offers for this property.
+          p Click on an offer for a guided explination of what it means to you.
+      .row
+        .list-group
+          a(href='/listing/' + listingId + '/offer/1', class="list-group-item offer")
+            .col-md-3
+              span Price
+              span $1,200,000
+            .col-md-3
+              span Earnest Money
+              span $12,000
+            .col-md-2
+              span Date
+              span 09/01/2016
+            .col-md-2
+              span Inspection
+              span Yes
+            .col-md-2
+              span Financing
+              span Yes
+          a(href='/listing/' + listingId + '/offer/2', class="list-group-item offer")
+            .col-md-3
+              span Price
+              span $1,300,000
+            .col-md-3
+              span Earnest Money
+              span $10,000
+            .col-md-2
+              span Date
+              span 09/03/2016
+            .col-md-2
+              span Inspection
+              span No
+            .col-md-2
+              span Financing
+              span Yes

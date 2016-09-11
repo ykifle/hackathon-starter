@@ -145,3 +145,17 @@ h1.big-q {
     color: #7baee2;
     font-weight: 200;
 }
+
+a.offer {
+  color: #676767;
+  display: inline-block;
+  border-top: 1px #dedede solid;
+
+  span {
+    display: inline-block;
+    width: 100%;
+    color: #676767;
+    font-weight: 200;
+    font-size: 20px;
+  }
+}

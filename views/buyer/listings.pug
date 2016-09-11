@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  .right-back-col
+  .row
+    .col-md-3
+      .sidebar-nav
+        .navbar(role="navigation")
+          .navbar-header
+            button(type="button", class="navbar-toggle", data-toggle="collapse", data-target=".sidebar-navbar-collapse")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            span.visible-xs.navbar-brand Sidebar menu
+          .navbar-collapse.collapse.sidebar-navbar-collapse
+            ul.nav.navbar-nav
+              li(class=(title == 'Listings') ? 'active': undefined)
+                a(href='/buyer/listings') Listings
+              li(class=(title == 'Offers') ? 'active': undefined)
+                a(href='/buyer/offers') Offers
+    .col-md-8
+      .row
+        .col-md-12
+          a(href='/buyer/listing/1', style='color: #000')
+            h3 1234 Fake St. San Carlos CA, 94070
+        .col-md-6
+          a(href='/buyer/listing/1', style='color: #000')
+            img(src='https://ssl.cdn-redfin.com/photo/8/mbpaddedwide/891/genMid.ML81586891_J.jpg', width='100%')
+        .col-md-6
+          h5 Asking Price: $1,000,000
+          a.btn.btn-info(href='/buyer/listing/1/make_offer', type='button') Make Offer
+      hr
+      .row
+        .col-md-12
+          a(href='/buyer/listing/2', style='color: #000')
+            h3 1234 Fake St. San Carlos CA, 94070
+        .col-md-6
+          a(href='/buyer/listing/2', style='color: #000')
+            img(src='https://ssl.cdn-redfin.com/photo/8/mbpaddedwide/586/genMid.ML81595586_3.jpg', width='100%')
+        .col-md-6
+          h5 Asking Price: $2,000,000
+          a.btn.btn-info(href='/buyer/listing/2/make_offer', type='button') Make Offer
+

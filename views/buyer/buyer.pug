@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .row
+    .col-md-4
+      .panel.panel-default
+        .panel-body.text-center
+          h2 Listings
+          p There are 2 properties for sale near you. Take a look!
+          a(href='/buyer/listings', type='button') Continue
+    .col-md-4
+      .panel.panel-default
+        .panel-body.text-center
+          h2 Market Trends
+          p Lets see what's going on in the neighborhood.
+    .col-md-4
+      .panel.panel-default
+        .panel-body.text-center
+          h2 Loan Shopping
+          p Find the best interest rates in town.
+    if user.offer
+      .col-md-4
+      .panel.panel-default
+        .panel-body.text-center
+          h2 Offers
+          p You have one pending offer!
+

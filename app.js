@@ -34,6 +34,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const sellerController = require('./controllers/seller');
+const buyerController = require('./controllers/buyer');
 
 /**
  * API keys and Passport configuration.
@@ -129,6 +130,15 @@ app.get('/listing/:listingId/disclosures/structure/:stepId', sellerController.ge
 app.get('/listing/:listingId/disclosures/general', sellerController.getDisclosuresGeneral);
 app.get('/listing/:listingId/disclosures/review', sellerController.getDisclosuresReview);
 app.post('/listing/:listingId/disclosures', sellerController.postDisclosures);
+
+// Offers
+app.get('/listing/:listingId/offers', sellerController.getOffers);
+
+app.get('/buyer', buyerController.getBuyerDashboard);
+app.get('/buyer/listings', buyerController.getListings);
+app.get('/buyer/listing/:listingId/make_offer', buyerController.getOfferCreate);
+app.get('/buyer/listing/:listingId/make_offer/review', buyerController.getMakeOfferReview);
+app.get('/buyer/listing/:listingId/make_offer/sign', buyerController.getMakeOfferSign);
 
 /**
  * Primary app routes.
