@@ -3,7 +3,7 @@ var https = require('https');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var key = "";
-var num=5567
+var num=process.argv[2]
 var auth="Basic YWRtaW46TmV0YXBwMSE="
 var masterKey="d014ace2-6f03-11e6-8b3b-4d8e0894f7d7:type=volume,uuid=206b0cfe-c2a6-44d8-a1d2-b8a43f715b11"
 var cloneName="clone"+num
