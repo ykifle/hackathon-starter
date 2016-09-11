@@ -47,7 +47,8 @@ const app = express();
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
+const MONGODB_URI='mongodb://localhost:8082/test';
+mongoose.connect(MONGODB_URI || process.env.MONGOLAB_URI);
 mongoose.connection.on('connected', () => {
   console.log('%s MongoDB connection established!', chalk.green('✓'));
 });
@@ -76,7 +77,7 @@ app.use(session({
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
-    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+    url: MONGODB_URI || process.env.MONGOLAB_URI,
     autoReconnect: true
   })
 }));
