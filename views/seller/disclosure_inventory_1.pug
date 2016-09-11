@@ -1,0 +1,103 @@
+extends ../layout
+
+block content
+  .right-back-col
+  .row
+    .col-md-3
+      .sidebar-nav
+        .navbar(role="navigation")
+          .navbar-header
+            button(type="button", class="navbar-toggle", data-toggle="collapse", data-target=".sidebar-navbar-collapse")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            span.visible-xs.navbar-brand Sidebar menu
+          .navbar-collapse.collapse.sidebar-navbar-collapse
+            ul.nav.navbar-nav
+              li(class=(title == 'Listing') ? 'active': undefined)
+                a(href='/listing/' + listingId) Overview
+              li(class=(title == 'Disclosures') ? 'active': undefined)
+                a(href='/listing/' + listingId + '/disclosures') Disclosures
+              li(class=(title == 'Offers') ? 'active': undefined)
+                a(href='/listing/' + listingId + '/offers') Offers
+                  span.badge 2
+    .col-md-8
+      .row
+        .col-md-12
+          h4 Disclosures
+          h1.big-q Which of these things is in your house?
+          p A buyer will want to know what items will come with the house like a fridge or oven.
+          p While you check if each of these things is in your house also check if they are working properly. You will need to tell the buyer if anything is broken.
+          .checkbox
+            label
+              input(type='checkbox')
+              | Range
+          .checkbox
+            label
+              input(type='checkbox')
+              | Oven
+          .checkbox
+            label
+              input(type='checkbox')
+              | Microwave
+          .checkbox
+            label
+              input(type='checkbox')
+              | Dishwasher
+          .checkbox
+            label
+              input(type='checkbox')
+              | Trash Compactor
+          .checkbox
+            label
+              input(type='checkbox')
+              | Garbage Disposal
+          .checkbox
+            label
+              input(type='checkbox')
+              | Washer/Dryer Hookups
+          .checkbox
+            label
+              input(type='checkbox')
+              | Rain Gutters
+          .checkbox
+            label
+              input(type='checkbox')
+              | Burglar Alarms
+          .checkbox
+            label
+              input(type='checkbox')
+              | Carbon Monoxide Device(s) I Smoke Detector(s)
+          .checkbox
+            label
+              input(type='checkbox')
+              | Fire Alarm
+          .checkbox
+            label
+              input(type='checkbox')
+              | TV Antenna
+          .checkbox
+            label
+              input(type='checkbox')
+              | Satellite Dish
+          .checkbox
+            label
+              input(type='checkbox')
+              | Intercom
+          .checkbox
+            label
+              input(type='checkbox')
+              | Central Heating
+          .checkbox
+            label
+              input(type='checkbox')
+              | Central Air Conditioning
+          .checkbox
+            label
+              input(type='checkbox')
+              | Evaporator Cooler(s)
+      hr
+      .row
+        .col-md-12
+          a.btn.btn-info.pull-right(href='/listing/' + listingId + '/disclosures/structure', type='button') Continue

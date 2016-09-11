@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  h2 Disclosures
+  hr
+  .row
+    .col-md-12
+      h3 Which of these items will be sold with the house?
+      .checkbox
+        label
+          input(type='checkbox')
+          | Burglar Alarms
+      .checkbox
+        label
+          input(type='checkbox')
+          | Carbon Monoxide Device(s)
+      .checkbox
+        label
+          input(type='checkbox')
+          | Smoke Detector(s)
+  hr
+  .row
+    .col-md-12
+      a.btn.btn-info(href='/listing/' + listingId + '/disclosure/structure', type='button') Continue

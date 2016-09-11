@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  .right-back-col.full
+  .row
+    .col-md-12
+      h4 Make Offer
+      a(href='/buyer/listing/' + listingId + '/make_offer') Back
+      h1.big-q Review and sign
+      p We've filled out this offer form based on your answers. Take some time to make sure everything is correct and when you are done sign it.
+      iframe(src='https://sandbox.esignlive.com/access?sessionToken=' + user.offerToken, width="100%", height="800")
+  hr
+  .row
+    .col-md-12
+      a.btn.btn-info.pull-right(href='/buyer', type='button') Finish

@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+  .right-back-col
+  .row
+    .col-md-3
+      .sidebar-nav
+        .navbar(role="navigation")
+          .navbar-header
+            button(type="button", class="navbar-toggle", data-toggle="collapse", data-target=".sidebar-navbar-collapse")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            span.visible-xs.navbar-brand Sidebar menu
+          .navbar-collapse.collapse.sidebar-navbar-collapse
+            ul.nav.navbar-nav
+              li(class=(title == 'Listings') ? 'active': undefined)
+                a(href='/buyer/listings') Listings
+              li(class=(title == 'Offers') ? 'active': undefined)
+                a(href='/buyer/offers') Offers
+    .col-md-8
+      .row
+        .col-md-12
+          h4 Make Offer
+          h1.big-q How much do you want to offer for this property?
+          p If you are not sure try taking a look at our 
+            a(href='#') market analysis
+          input(type='text')
+      hr
+      .row
+        .col-md-12
+          a.btn.btn-info.pull-right(href='/buyer/listing/' + listingId + '/make_offer/review', type='button') Review
+

@@ -13,12 +13,12 @@ const apiKey = 'RTVINU5kcHFvZGtPOk1yaVNDMkdtQkNJQg==';
  * GET /seller
  * See all your listings.
  */
-exports.getSellerDashboard = (req, res) => {
+exports.getBuyerDashboard = (req, res) => {
   if (!req.user) {
     return res.redirect('/login');
   }
-  res.render('seller/seller', _.extend(req.params, {
-    title: 'Seller'
+  res.render('buyer/buyer', _.extend(req.params, {
+    title: 'Buyer'
   }));
 };
 
@@ -30,133 +30,86 @@ exports.getListings = (req, res) => {
   if (!req.user) {
     return res.redirect('/login');
   }
-  res.render('seller/listings', _.extend(req.params, {
+  res.render('buyer/listings', _.extend(req.params, {
     title: 'Listings'
   }));
 };
 
 /**
- * GET /listing/<id>
+ * GET /listing/<id>/offer_create
  * See listing details.
  */
-exports.getListing = (req, res) => {
+exports.getOfferCreate = (req, res) => {
   if (!req.user) {
     return res.redirect('/login');
   }
-  res.render('seller/listing', _.extend(req.params, {
-    title: 'Listing'
+  res.render('buyer/offer_create', _.extend(req.params, {
+    title: 'Listings'
   }));
 };
 
-/**
- * GET /listing/<id>/disclosures
- * Fillout disclosures statement.
- */
-exports.getDisclosures = (req, res) => {
+exports.getMakeOfferReview = (req, res) => {
   if (!req.user) {
     return res.redirect('/login');
   }
-  res.render('seller/disclosure', _.extend(req.params, {
-    title: 'Disclosures',
-  }));
-};
-
-/**
- * GET /listing/<id>/disclosures/inventory
- * Fillout disclosures statement.
- */
-exports.getDisclosuresInventory = (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  var step = req.params.stepId || 1
-  res.render('seller/disclosure_inventory_' + step, _.extend(req.params, {
-    title: 'Disclosures'
-  }));
-};
-
-/**
- * GET /listing/<id>/disclosures/structure
- * Fillout disclosures statement.
- */
-exports.getDisclosuresStructure = (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  var step = req.params.stepId || 1
-  res.render('seller/disclosure_structure_' + step, _.extend(req.params, {
-    title: 'Disclosures'
-  }));
-};
-
-/**
- * GET /listing/<id>/disclosures/general
- * Fillout disclosures statement.
- */
-exports.getDisclosuresGeneral = (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  res.render('seller/disclosure/general', _.extend(req.params, {
-    title: 'Disclosures'
-  }));
-};
-
-/**
- * GET /listing/<id>/disclosures/review
- * Fillout disclosures statement.
- */
-exports.getDisclosuresReview = (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  console.log('user = ' + req.user);
-  console.log('user.token = ' + req.user.token);
-  if (!req.user.token) {
-    return res.redirect('/listing/' + req.params.listingId + '/disclosures/structure')
-  }
-  res.render('seller/disclosure_review', _.extend(req.params, {
-    title: 'Disclosures'
-  }));
-};
-
-/**
- * POST /listing/<id>/disclosures
- * Fillout disclosures statement.
- */
-exports.postDisclosures = (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  generateTdsToken(function(error, token) {
+  generateOfferToken(function(error, token) {
     if (error) {
       console.log('Error:' + error);
       return next(err);
     }
-    req.user.token = token;
-    console.log('Setting user token = ' + req.user.token);
+    req.user.offerToken = token;
+    console.log('Setting user offer token = ' + req.user.offerToken);
     req.user.save((err) => {
       if (err) {
         console.log('Error:' + err);
         res.status(400).send('Failed saving user');
       } else {
         console.log('Success saving user token');
-        res.send({ 'disclosureDocumentToken': token });
+        res.redirect('/buyer/listing/' + req.params.listingId + '/make_offer/sign');
       } 
     });
   });
+}
+
+exports.getMakeOfferSign = (req, res) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+  if (!req.user.offerToken) {
+    return res.redirect('/buyer/listing/' + req.params.listingId + '/make_offer');
+  }
+  res.render('buyer/offer_sign', _.extend(req.params, {
+    title: 'Listings'
+  }));
+}
+
+/**
+ * POST /listing/<id>/offer
+ * See listing details.
+ */
+exports.postOffer = (req, res) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+  res.render('buyer/listings', _.extend(req.params, {
+    title: 'Listings'
+  }));
 };
 
+/**
+ * GET /offers/<id>
+ * See listing details.
+ */
 exports.getOffers = (req, res) => {
   if (!req.user) {
     return res.redirect('/login');
   }
-  res.render('seller/offers', _.extend(req.params, {
+  res.render('buyer/offers', _.extend(req.params, {
     title: 'Offers'
   }));
-}
+};
 
-function generateTdsToken(callback) {
+function generateOfferToken(callback) {
   async.waterfall([
     createPackage,
     getSignerToken,
@@ -168,6 +121,15 @@ function generateTdsToken(callback) {
 function createPackage(done) {
   var json = {
     "roles": [{
+        "id": "buyer",
+        "type": "SIGNER",
+        "signers": [{
+            "firstName": "Fei",
+            "lastName": "Xue",
+            "email": "fayexuexue@gmail.com",
+            "id": "buyer"
+        }]
+    },{
         "id": "seller",
         "type": "SIGNER",
         "signers": [{
@@ -189,7 +151,7 @@ function createPackage(done) {
                 "binding": null,
                 "extract": false,
                 "extractAnchor": {
-                    "text": "Seller",
+                    "text": "SELLER",
                     "index": 18,
                     "width": 200,
                     "height": 20,
@@ -202,23 +164,32 @@ function createPackage(done) {
                 "data": null,
                 "type": "SIGNATURE",
                 "value": ""
-            },
-            {
-              "value": null,
-              "type": "INPUT",
-              "binding": "{approval.signed}",
-              "extract": false,
-              "extractAnchor": {
-                "text": "Date",
-                "index": 4,
-                "width": 75,
-                "height": 20,
-                "anchorPoint": "TOPRIGHT",
-                "characterIndex": 4,
-                "leftOffset": 5,
-                "topOffset": -5
-              },
-              "subtype": "LABEL",
+            }],
+            "name": ""
+        },{
+            "role": "buyer",
+            "signed": null,
+            "accepted": null,
+            "data": null,
+            "fields": [{
+                "subtype": "FULLNAME",
+                "width": 200,
+                "binding": null,
+                "extract": false,
+                "extractAnchor": {
+                    "text": "BUYER",
+                    "index": 18,
+                    "width": 200,
+                    "height": 20,
+                    "anchorPoint": "TOPRIGHT",
+                    "characterIndex": 6,
+                    "leftOffset": 5,
+                    "topOffset": -5
+                },
+                "validation": null,
+                "data": null,
+                "type": "SIGNATURE",
+                "value": ""
             }],
             "name": ""
         }],
@@ -231,7 +202,7 @@ function createPackage(done) {
     "status": "SENT"
   };
   var jsonPayload = JSON.stringify(json);
-  var tdsDocumentContent = fs.readFileSync(path.join(__dirname, '../public/pdf') + '/tds.pdf');
+  var offerDocumentContent = fs.readFileSync(path.join(__dirname, '../public/pdf') + '/offer.pdf');
   var options = {
     method: 'POST',
     url: 'https://sandbox.esignlive.com/api/packages',
@@ -243,9 +214,9 @@ function createPackage(done) {
     },
     formData: {
       file: {
-        value: tdsDocumentContent,
+        value: offerDocumentContent,
         options: {
-          filename: 'tds.pdf',
+          filename: 'offer.pdf',
           contentType: null
         }
       },
@@ -279,7 +250,7 @@ function getSignerToken(packageId, done) {
     },
     body: {
       packageId: packageId,
-      signerId: 'seller'
+      signerId: 'buyer'
     },
     json: true
   };

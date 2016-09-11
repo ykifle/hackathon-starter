@@ -23,7 +23,8 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+const configName = process.env.config || '.env.example';
+dotenv.load({ path: configName });
 
 /**
  * Controllers (route handlers).
@@ -33,6 +34,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const sellerController = require('./controllers/seller');
+const buyerController = require('./controllers/buyer');
 
 /**
  * API keys and Passport configuration.
@@ -84,7 +86,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
+  console.log('originalUrl=' + req.originalUrl);
   if (req.path === '/api/upload') {
+    next();
+  } else if (req.originalUrl == '/listing/1/disclosures') {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -113,7 +118,27 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Turboestate routes
  */
 app.get('/seller', sellerController.getSellerDashboard);
-app.get('/listing/:id', sellerController.getListing);
+app.get('/listings', sellerController.getListings);
+app.get('/listing/:listingId', sellerController.getListing);
+
+// Disclosures
+app.get('/listing/:listingId/disclosures', sellerController.getDisclosures);
+app.get('/listing/:listingId/disclosures/inventory', sellerController.getDisclosuresInventory);
+app.get('/listing/:listingId/disclosures/inventory/:stepId', sellerController.getDisclosuresInventory);
+app.get('/listing/:listingId/disclosures/structure', sellerController.getDisclosuresStructure);
+app.get('/listing/:listingId/disclosures/structure/:stepId', sellerController.getDisclosuresStructure);
+app.get('/listing/:listingId/disclosures/general', sellerController.getDisclosuresGeneral);
+app.get('/listing/:listingId/disclosures/review', sellerController.getDisclosuresReview);
+app.post('/listing/:listingId/disclosures', sellerController.postDisclosures);
+
+// Offers
+app.get('/listing/:listingId/offers', sellerController.getOffers);
+
+app.get('/buyer', buyerController.getBuyerDashboard);
+app.get('/buyer/listings', buyerController.getListings);
+app.get('/buyer/listing/:listingId/make_offer', buyerController.getOfferCreate);
+app.get('/buyer/listing/:listingId/make_offer/review', buyerController.getMakeOfferReview);
+app.get('/buyer/listing/:listingId/make_offer/sign', buyerController.getMakeOfferSign);
 
 /**
  * Primary app routes.

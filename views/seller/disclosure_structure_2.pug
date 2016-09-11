@@ -1,0 +1,17 @@
+extends ../layout
+include ../mixins/bool_input.pug
+
+block content
+  h2 Disclosures
+  hr
+  .row
+    .col-md-12
+      h3 Walk around the outside of the house and check if you see anything wrong with the walls, roof, doors or windows.
+      +bool_input('Do you see any defects with the exterior walls?', 'walls', 'Yes', 'No', true, 'Describe what is wrong in a few words.')
+      +bool_input('Do you see any defects with the roof?', 'roof', 'Yes', 'No', true, 'Describe what is wrong in a few words.')
+      +bool_input('Do you see any defects with the doors?', 'doors', 'Yes', 'No', true, 'Describe what is wrong in a few words.')
+      +bool_input('Do you see any defects with the windows?', 'windows', 'Yes', 'No', true, 'Describe what is wrong in a few words.')
+  hr
+  .row
+    .col-md-12
+      a.btn.btn-info(href='/listing/' + listingId + '/disclosure/structure/3', type='button') Continue
