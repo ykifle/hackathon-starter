@@ -84,7 +84,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
+  console.log('originalUrl=' + req.originalUrl);
   if (req.path === '/api/upload') {
+    next();
+  } else if (req.originalUrl == '/listing/1/disclosures') {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -113,7 +116,18 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Turboestate routes
  */
 app.get('/seller', sellerController.getSellerDashboard);
-app.get('/listing/:id', sellerController.getListing);
+app.get('/listings', sellerController.getListings);
+app.get('/listing/:listingId', sellerController.getListing);
+
+// Disclosures
+app.get('/listing/:listingId/disclosures', sellerController.getDisclosures);
+app.get('/listing/:listingId/disclosures/inventory', sellerController.getDisclosuresInventory);
+app.get('/listing/:listingId/disclosures/inventory/:stepId', sellerController.getDisclosuresInventory);
+app.get('/listing/:listingId/disclosures/structure', sellerController.getDisclosuresStructure);
+app.get('/listing/:listingId/disclosures/structure/:stepId', sellerController.getDisclosuresStructure);
+app.get('/listing/:listingId/disclosures/general', sellerController.getDisclosuresGeneral);
+app.get('/listing/:listingId/disclosures/review', sellerController.getDisclosuresReview);
+app.post('/listing/:listingId/disclosures', sellerController.postDisclosures);
 
 /**
  * Primary app routes.

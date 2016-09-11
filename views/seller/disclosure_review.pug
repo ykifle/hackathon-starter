@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  .right-back-col.full
+  .row
+    .col-md-12
+      h4 Disclosures
+      a(href='/listing/' + listingId + '/disclosures/structure') Back
+      h1.big-q Review and sign
+      p We've filled out this Transfer Disclosure Statement based on your answers. Take some time to make sure everything is correct and when you are done sign it.
+      iframe(src='https://sandbox.esignlive.com/access?sessionToken=' + user.token, width="100%", height="800")
+  hr
+  .row
+    .col-md-12
+      a.btn.btn-info.pull-right(href='/listing/' + listingId + '/offers', type='button') Finish

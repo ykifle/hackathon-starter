@@ -1,0 +1,18 @@
+mixin bool_input(question, name, true_val, false_val, with_true_input, true_input_heading)
+  p.
+    #{question}
+  .radio
+    label
+      input(type='radio', name=name + '_radio', value='true', data-toggle="collapse", data-target=".collapse_" + name + ":not(.in)")
+      | #{true_val}
+  .radio
+    label
+      input(type='radio', name=name + '_radio', value='false', data-toggle="collapse", data-target=".collapse_" + name + ".in")
+      | #{false_val}
+  if with_true_input
+    .panel-group.panel-collapse.collapse(class="collapse_" + name)
+      .panel.panel-default
+        .panel-heading
+          h6.panel-title #{true_input_heading}
+        .panel-body
+          input(type='text')
